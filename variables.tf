@@ -1,0 +1,3 @@
+variable "concourse" {
+  default = "no"
+}
