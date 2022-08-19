@@ -1,11 +1,11 @@
 variable "secrets" {
   type = map(object({
-    workspace               = number
+    workspace               = string
     name                    = string
-    recovery_window_in_days = number
+    recovery-window-in-days = number
     application             = string
     business-unit           = string
     password                = string
-    secret_string           = string
+    secret                  = string
   }))
 }

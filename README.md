@@ -10,8 +10,24 @@ _This Terraform module ......_
 
 ## Usage
 
-_Describe how to use the module_
-See the [examples/](examples/) folder.
+```
+module "secrets_manager" {
+  source = "github.com/ministryofjustice/cloud-platform-terraform-secrets-manager?ref=concourse"
+  secrets = {
+    "concourse_docker_username" = {
+      workspace               = "cp-1508-1217",
+      name                    = "test-secret", 
+      recovery-window-in-days = 0, 
+      application             = "test-application", 
+      business-unit           = "test-platform",
+      password                = ["false", "add", "create"],
+      secret                  = ["false", var.<variable-name>],
+    },
+  }
+}
+```
+
+See the [examples](examples/) folder for examples on setting random and custom passwords.
 
 <!--- BEGIN_TF_DOCS --->
 ## Requirements
@@ -26,24 +42,17 @@ See the [examples/](examples/) folder.
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
 
-## Modules
-
-No modules.
-
-## Resources
-
-| Name | Type |
-|------|------|
-| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
-| [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
-
 ## Inputs
 
-No inputs.
-
-## Outputs
-
-No outputs.
+| Name | Description | Required |
+|------|-------------|:--------:|
+| workspace | name of the cluster | true |
+name | name of the secret | true |
+recovery-window-in-days | [0 - 30] | true |
+application | tag name of the application | true |
+business-unit | tag name of the business unit | true |
+password | [add, create, false] | true |
+secret | [false, variable] | true |
 
 <!--- END_TF_DOCS --->
 
