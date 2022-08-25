@@ -8,12 +8,12 @@ This Terraform module is used to create and manage secret manager resources in t
 module "secrets_manager" {
   source = "github.com/ministryofjustice/cloud-platform-terraform-secrets-manager?ref=concourse"
   secrets = {
-    "test-secret" = {
-      workspace               = "cp-1508-1217",
-      name                    = "test-secret", 
-      recovery-window-in-days = 0, 
-      application             = "test-application", 
-      business-unit           = "test-platform",
+    ["secret description"] = {
+      workspace               = ["workspace name"],
+      name                    = ["secret name"], 
+      recovery-window-in-days = [0, 7 - 30],
+      application             = ["application name for tag"], 
+      business-unit           = ["bussiness unit for tag"],
       password                = ["false", "add", "create"],
       secret                  = ["false", var.<variable-name>],
     },
@@ -21,7 +21,7 @@ module "secrets_manager" {
 }
 ```
 
-See the [examples](examples/) folder for examples on setting random and custom passwords.
+See the [examples](examples/) folder for examples on setting random, custom passwords and adding multiple secrets.
 
 <!--- BEGIN_TF_DOCS --->
 ## Requirements
@@ -42,7 +42,7 @@ See the [examples](examples/) folder for examples on setting random and custom p
 |------|-------------|:--------:|
 | workspace | name of the cluster | true |
 name | name of the secret | true |
-recovery-window-in-days | [0 - 30] | true |
+recovery-window-in-days | [0, 7 - 30] | true |
 application | tag name of the application | true |
 business-unit | tag name of the business unit | true |
 password | [add, create, false] | true |
