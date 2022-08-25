@@ -6,7 +6,7 @@ This Terraform module is used to create and manage secret manager resources in t
 
 ```
 module "secrets_manager" {
-  source = "github.com/ministryofjustice/cloud-platform-terraform-secrets-manager?ref=concourse"
+  source = "github.com/ministryofjustice/cloud-platform-terraform-secrets-manager?ref=1.0.0"
   secrets = {
     ["secret description"] = {
       workspace               = ["workspace name"],
