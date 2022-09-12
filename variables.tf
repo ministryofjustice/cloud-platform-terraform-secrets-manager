@@ -6,6 +6,5 @@ variable "secrets" {
     application             = string
     business-unit           = string
     password                = string
-    secret                  = string
   }))
 }

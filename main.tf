@@ -16,14 +16,6 @@ resource "aws_secretsmanager_secret" "secret" {
   }
 }
 
-resource "aws_secretsmanager_secret_version" "add_secret_version" {
-  for_each      = { for k, v in var.secrets : k => v if v.workspace == terraform.workspace && v.password == "add" }
-  secret_id     = aws_secretsmanager_secret.secret[each.key].id
-  secret_string = each.value.secret == "false" ? "" : each.value.secret
-
-  depends_on = [aws_secretsmanager_secret.secret]
-}
-
 resource "aws_secretsmanager_secret_version" "create_secret_version" {
   for_each      = { for k, v in var.secrets : k => v if v.workspace == terraform.workspace && v.password == "create" }
   secret_id     = aws_secretsmanager_secret.secret[each.key].id

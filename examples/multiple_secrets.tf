@@ -8,16 +8,14 @@ module "secrets_manager" {
       application             = "test-application",
       business-unit           = "test-platform",
       password                = "create",
-      secret                  = "false",
     },
     "test-secret" = {
       workspace               = "cp-1508-1217",
       name                    = "test-secret",
-      recovery-window-in-days = 0,
+      recovery-window-in-days = 30,
       application             = "test-application",
       business-unit           = "test-platform",
-      password                = "add",
-      secret                  = var.password # variable-name is the name of the variable in the terraform.tfvars file. This is intended to used in paraellel with gitcrypt.
+      password                = "false",
     },
   }
 }

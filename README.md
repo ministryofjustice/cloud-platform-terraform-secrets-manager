@@ -14,14 +14,13 @@ module "secrets_manager" {
       recovery-window-in-days = [0, 7 - 30],
       application             = ["application name for tag"], 
       business-unit           = ["bussiness unit for tag"],
-      password                = ["false", "add", "create"],
-      secret                  = ["false", var.<variable-name>],
+      password                = ["false", "create"],
     },
   }
 }
 ```
 
-See the [examples](examples/) folder for examples on setting random, custom passwords and adding multiple secrets.
+See the [examples](examples/) folder for examples on setting random passwords and adding multiple secrets.
 
 <!--- BEGIN_TF_DOCS --->
 ## Requirements
@@ -45,7 +44,6 @@ name | name of the secret | true |
 recovery-window-in-days | [0, 7 - 30] | true |
 application | tag name of the application | true |
 business-unit | tag name of the business unit | true |
-password | [add, create, false] | true |
-secret | [false, variable] | true |
+password | [create, false] | true |
 
 <!--- END_TF_DOCS --->

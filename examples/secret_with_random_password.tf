@@ -8,7 +8,6 @@ module "secrets_manager" {
       application             = "test-application",
       business-unit           = "test-platform",
       password                = "create",
-      secret                  = "false",
     },
   }
 }
