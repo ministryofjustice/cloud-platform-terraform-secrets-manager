@@ -11,8 +11,13 @@ resource "aws_secretsmanager_secret" "secret" {
   recovery_window_in_days = each.value.recovery-window-in-days
 
   tags = {
-    application   = each.value.application
-    business-unit = each.value.business-unit
+    team_name              = each.value.team_name
+    business-unit          = each.value.business_unit
+    application            = each.value.application
+    is-production          = each.value.is_production
+    namespace              = each.value.namespace
+    environment-name       = each.value.environment
+    infrastructure-support = each.value.infrastructure_support
   }
 }
 

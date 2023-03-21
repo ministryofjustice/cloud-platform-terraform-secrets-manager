@@ -3,8 +3,13 @@ variable "secrets" {
     workspace               = string
     name                    = string
     recovery-window-in-days = number
-    application             = string
-    business-unit           = string
     password                = string
+    team_name               = string
+    business_unit           = string
+    application             = string
+    is_production           = string
+    namespace              = string
+    environment             = string
+    infrastructure_support  = string
   }))
 }

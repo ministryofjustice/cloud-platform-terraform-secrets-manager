@@ -5,9 +5,14 @@ module "secrets_manager" {
       workspace               = "cp-1508-1217",
       name                    = "test-secret",
       recovery-window-in-days = 0,
+      password                = "create",
+      team_name               = "test-team",
       application             = "test-application",
       business-unit           = "test-platform",
-      password                = "create",
+      is_production           = "false",
+      namespace               = "test-namespace",
+      environment             = "test-environment",
+      infrastructure_support  = "test-support-team@test.gov.uk",
     },
   }
 }

@@ -12,9 +12,17 @@ module "secrets_manager" {
       workspace               = ["workspace name"],
       name                    = ["secret name"], 
       recovery-window-in-days = [0, 7 - 30],
-      application             = ["application name for tag"], 
-      business-unit           = ["bussiness unit for tag"],
       password                = ["false", "create"],
+      team_name               = ["github team name"]
+      business-unit           = ["Area of the MOJ responsible for the service."],
+      application             = ["Name of Application you are deploying"], 
+      is_production           = ["true", "false"]
+      namespace               = ["namespace name"]
+      environment             = ["The type of environment you're deploying to."]
+      infrastructure_support  = ["The team responsible for managing the infrastructure. Should be of the form team-email."]
+
+
+
     },
   }
 }
