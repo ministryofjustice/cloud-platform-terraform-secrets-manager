@@ -35,7 +35,7 @@ See the [examples](examples/) folder for examples on setting random passwords an
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.2.5 |
 
 ## Providers
 
@@ -48,10 +48,10 @@ See the [examples](examples/) folder for examples on setting random passwords an
 | Name | Description | Required |
 |------|-------------|:--------:|
 | workspace | name of the cluster | true |
-name | name of the secret | true |
-recovery-window-in-days | [0, 7 - 30] | true |
-application | tag name of the application | true |
-business-unit | tag name of the business unit | true |
-password | [create, false] | true |
+| name | name of the secret | true |
+| recovery-window-in-days | [0, 7 - 30] | true |
+| application | tag name of the application | true |
+| business-unit | tag name of the business unit | true |
+| password | [create, false] | true |
 
 <!--- END_TF_DOCS --->

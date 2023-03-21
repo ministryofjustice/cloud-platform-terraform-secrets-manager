@@ -13,10 +13,6 @@ module "secrets_manager" {
       namespace               = "test-namespace",
       environment             = "test-environment",
       infrastructure_support  = "test-support-team@test.gov.uk",
-
-
-
-
     },
     "test-secret" = {
       workspace               = "cp-1508-1217",

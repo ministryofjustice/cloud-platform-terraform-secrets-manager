@@ -5,9 +5,9 @@ provider "aws" {
 
 # dynamtic secrets example 
 resource "aws_secretsmanager_secret" "secret" {
-  for_each                = { for k, v in var.secrets : k => v if v.workspace == terraform.workspace }
-  description             = each.key
-  name                    = each.value.name
+  for_each                = { for k, v in var.secrets : k => v }
+  description             = "Secret for ${each.value.name}"
+  name                    = "${each.value.namespace}/${each.value.name}"
   recovery_window_in_days = each.value.recovery-window-in-days
 
   tags = {
@@ -22,7 +22,7 @@ resource "aws_secretsmanager_secret" "secret" {
 }
 
 resource "aws_secretsmanager_secret_version" "create_secret_version" {
-  for_each      = { for k, v in var.secrets : k => v if v.workspace == terraform.workspace && v.password == "create" }
+  for_each      = { for k, v in var.secrets : k => v if v.random-password == true }
   secret_id     = aws_secretsmanager_secret.secret[each.key].id
   secret_string = random_password.password[each.key].result == "false" ? "" : random_password.password[each.key].result
 
@@ -30,7 +30,7 @@ resource "aws_secretsmanager_secret_version" "create_secret_version" {
 }
 
 resource "random_password" "password" {
-  for_each         = { for k, v in var.secrets : k => v if v.workspace == terraform.workspace && v.password == "create" }
+  for_each         = { for k, v in var.secrets : k => v if v.random-password == true }
   length           = 16
   min_lower        = 1
   min_numeric      = 1
