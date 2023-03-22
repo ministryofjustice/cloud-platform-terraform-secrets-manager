@@ -42,16 +42,28 @@ See the [examples](examples/) folder for examples on setting random passwords an
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [aws_secretsmanager_secret.secret](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
+| [aws_secretsmanager_secret_version.create_secret_version](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret_version) | resource |
+| [random_password.password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 
 ## Inputs
 
-| Name | Description | Required |
-|------|-------------|:--------:|
-| workspace | name of the cluster | true |
-| name | name of the secret | true |
-| recovery-window-in-days | [0, 7 - 30] | true |
-| application | tag name of the application | true |
-| business-unit | tag name of the business unit | true |
-| password | [create, false] | true |
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_secrets"></a> [secrets](#input\_secrets) | n/a | <pre>map(object({<br>    name                    = string<br>    recovery-window-in-days = number<br>    random-password         = bool<br>    team_name               = string<br>    business_unit           = string<br>    application             = string<br>    is_production           = bool<br>    namespace               = string<br>    environment             = string<br>    infrastructure_support  = string<br>  }))</pre> | n/a | yes |
+
+## Outputs
+
+No outputs.
 
 <!--- END_TF_DOCS --->
