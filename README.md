@@ -1,30 +1,48 @@
-# cloud-platform-terraform-_template_
+# cloud-platform-terraform-secret-manager
 
-_note: Please remove all comments in italics and fill where required>_
-
-_Please change the urls in the release badge below_
-[![Releases](https://img.shields.io/github/release/ministryofjustice/cloud-platform-terraform-template/all.svg?style=flat-square)](https://github.com/ministryofjustice/cloud-platform-terraform-template/releases)
-
-_Short describion of the module_
-_This Terraform module ......_
+This Terraform module is used to create and manage secret manager resources in the AWS.
 
 ## Usage
 
-_Describe how to use the module_
-See the [examples/](examples/) folder.
+```
+module "secrets_manager" {
+  source = "github.com/ministryofjustice/cloud-platform-terraform-secrets-manager?ref=1.0.0"
+  secrets = {
+    ["secret description"] = {
+      workspace               = ["workspace name"],
+      name                    = ["secret name"], 
+      recovery-window-in-days = [0, 7 - 30],
+      password                = ["false", "create"],
+      team_name               = ["github team name"]
+      business-unit           = ["Area of the MOJ responsible for the service."],
+      application             = ["Name of Application you are deploying"], 
+      is_production           = ["true", "false"]
+      namespace               = ["namespace name"]
+      environment             = ["The type of environment you're deploying to."]
+      infrastructure_support  = ["The team responsible for managing the infrastructure. Should be of the form team-email."]
+
+
+
+    },
+  }
+}
+```
+
+See the [examples](examples/) folder for examples on setting random passwords and adding multiple secrets.
 
 <!--- BEGIN_TF_DOCS --->
 ## Requirements
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.14 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.2.5 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
 
@@ -34,33 +52,18 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
-| [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
+| [aws_secretsmanager_secret.secret](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
+| [aws_secretsmanager_secret_version.create_secret_version](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret_version) | resource |
+| [random_password.password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 
 ## Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_secrets"></a> [secrets](#input\_secrets) | n/a | <pre>map(object({<br>    name                    = string<br>    recovery-window-in-days = number<br>    random-password         = bool<br>    team_name               = string<br>    business_unit           = string<br>    application             = string<br>    is_production           = bool<br>    namespace               = string<br>    environment             = string<br>    infrastructure_support  = string<br>  }))</pre> | n/a | yes |
 
 ## Outputs
 
 No outputs.
 
 <!--- END_TF_DOCS --->
-
-## Tags
-
-Some of the inputs are tags. All infrastructure resources need to be tagged according to the [MOJ techincal guidance](https://ministryofjustice.github.io/technical-guidance/standards/documenting-infrastructure-owners/#documenting-owners-of-infrastructure). The tags are stored as variables that you will need to fill out as part of your module.
-
-| Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| application |  | string | - | yes |
-| business-unit | Area of the MOJ responsible for the service | string | `mojdigital` | yes |
-| environment-name |  | string | - | yes |
-| infrastructure-support | The team responsible for managing the infrastructure. Should be of the form team-email | string | - | yes |
-| is-production |  | string | `false` | yes |
-| team_name |  | string | - | yes |
-| sqs_name |  | string | - | yes |
-
-## Reading Material
-
-_add link to external source_
