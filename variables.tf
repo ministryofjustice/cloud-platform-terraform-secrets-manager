@@ -3,12 +3,12 @@ variable "secrets" {
     name                    = string
     recovery-window-in-days = number
     random-password         = bool
-    team_name               = string
-    business_unit           = string
+    team-name               = string
+    business-unit           = string
     application             = string
-    is_production           = bool
+    is-production           = bool
     namespace               = string
     environment             = string
-    infrastructure_support  = string
+    infrastructure-support  = string
   }))
 }
