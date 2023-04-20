@@ -59,7 +59,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_secrets"></a> [secrets](#input\_secrets) | n/a | <pre>map(object({<br>    name                    = string<br>    recovery-window-in-days = number<br>    random-password         = bool<br>    team_name               = string<br>    business_unit           = string<br>    application             = string<br>    is_production           = bool<br>    namespace               = string<br>    environment             = string<br>    infrastructure_support  = string<br>  }))</pre> | n/a | yes |
+| <a name="input_secrets"></a> [secrets](#input\_secrets) | n/a | <pre>map(object({<br>    name                    = string<br>    recovery-window-in-days = number<br>    random-password         = bool<br>    team-name               = string<br>    business-unit           = string<br>    application             = string<br>    is-production           = bool<br>    namespace               = string<br>    environment             = string<br>    infrastructure-support  = string<br>  }))</pre> | n/a | yes |
 
 ## Outputs
 
