@@ -12,23 +12,6 @@ resource "aws_secretsmanager_secret" "secret" {
   name                    = "${each.value.namespace}/${each.value.name}"
   recovery_window_in_days = each.value.recovery-window-in-days # Set to 0 for no protection, between 7-30 days protection, default is 30.
 
-  policy = {
-	"Version" : "2012-10-17",
-	"Statement" : [ {
-	  "Effect" : "Deny",
-	  "Principal" : {
-		"AWS" : "*"
-	  },
-	  "Action" : ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"],
-	  "Resource" : "arn:aws:secretsmanager:eu-west-2:${data.aws_caller_identity.current.account_id}:secret:${each.value.namespace}/${each.value.name}",
-	  "Condition" : {
-		"StringNotLike" : {
-		  "aws:userid" : "${each.value.namespace}"
-		}
-	  }
-	} ]
-}
-
   tags = {
     team-name              = each.value.team-name
     business-unit          = each.value.business-unit

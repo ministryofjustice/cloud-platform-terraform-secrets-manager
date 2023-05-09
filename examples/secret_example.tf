@@ -39,3 +39,4 @@ resource "kubernetes_secret" "irsa" {
 }
 
 // Existing users who have IRSA 
+// Add "module.secrets_manager.irsa_policy_arn" to the role_policy_arns in the irsa module
