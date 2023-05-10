@@ -1,38 +1,33 @@
-variable "secrets" {
-  type = map(object({
-    name                    = string
-    description             = string
-    recovery-window-in-days = number
 
-  }))
-}
 variable "application" {
   description = "Name of Application you are deploying"
   default     = "example-app"
 }
 
-variable "namespace" {}
+variable "namespace" {
+  default = "example-team"
+}
 
 variable "business_unit" {
   description = "Area of the MOJ responsible for the service."
+  default     = "Example"
 }
 
 variable "team_name" {
   description = "The name of your development team"
+  default     = "example"
 }
 
 variable "environment" {
   description = "The type of environment you're deploying to."
+  default     = "development"
 }
 
 variable "infrastructure_support" {
   description = "The team responsible for managing the infrastructure. Should be of the form team-email."
+  default     = "example@digital.justice.gov.uk"
 }
 
 variable "is_production" {
-}
-
-variable "serviceaccount_name" {
-  description = "The name of the service account you want to create"
-  default     = ""
+  default = "false"
 }
