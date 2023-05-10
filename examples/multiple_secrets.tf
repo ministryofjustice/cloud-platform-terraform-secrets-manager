@@ -1,5 +1,5 @@
-module "secrets_manager" {
-  source = "github.com/ministryofjustice/cloud-platform-terraform-secrets-manager?ref=tom-branch"
+module "secrets_manager_multiple_secrets" {
+  source = "../"
   team_name               = var.team_name
   application             = var.application
   business-unit           = var.business_unit
@@ -23,7 +23,7 @@ module "secrets_manager" {
 }
 
 // New users
-module "irsa" {
+module "irsa_multiple_secrets" {
   source = "github.com/ministryofjustice/cloud-platform-terraform-irsa?ref=1.1.0"
 
   eks_cluster_name =  var.eks_cluster_name
@@ -32,7 +32,7 @@ module "irsa" {
   service_account = var.service-account-name
 }
 
-resource "kubernetes_secret" "irsa" {
+resource "kubernetes_secret" "irsa_multiple_secrets" {
   metadata {
     name      = "irsa"
     namespace = var.namespace
