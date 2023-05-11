@@ -49,32 +49,32 @@ resource "aws_iam_policy" "irsa_policy" {
   description = "Policy for accessing secrets via IRSA"
 }
 
-resource "kubernetes_manifest" "secret_store" {
-  manifest = {
-    "apiVersion" = "external-secrets.io/v1alpha1"
-    "kind"       = "SecretStore"
-    "metadata" = {
-      "name"      = local.secret_store_name
-      "namespace" = var.namespace
-      "labels"    = {
-        "managed/by": "terraform"
-      }
-    }
-    "spec" = {
-      "provider" = {
-        "aws": {
-          "service": "SecretsManager"
-          "region": data.aws_region.current.name
-          "auth": {
-            "jwt": {
-              "serviceAccountRef": {
-                "name": var.serviceaccount_name
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
+# resource "kubernetes_manifest" "secret_store" {
+#   manifest = {
+#     "apiVersion" = "external-secrets.io/v1alpha1"
+#     "kind"       = "SecretStore"
+#     "metadata" = {
+#       "name"      = local.secret_store_name
+#       "namespace" = var.namespace
+#       "labels"    = {
+#         "managed/by": "terraform"
+#       }
+#     }
+#     "spec" = {
+#       "provider" = {
+#         "aws": {
+#           "service": "SecretsManager"
+#           "region": data.aws_region.current.name
+#           "auth": {
+#             "jwt": {
+#               "serviceAccountRef": {
+#                 "name": var.serviceaccount_name
+#               }
+#             }
+#           }
+#         }
+#       }
+#     }
+#   }
+# }
 

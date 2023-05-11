@@ -36,3 +36,9 @@ variable "serviceaccount_name" {
   description = "The name of the service account you want to create"
   default     = ""
 }
+
+variable "infrastructure_support" {
+  description = "The name of the service account."
+  type        = string
+  default     = ""
+}
