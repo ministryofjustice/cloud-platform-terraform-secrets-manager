@@ -1,5 +1,5 @@
 module "secrets_manager" {
-  source = "github.com/ministryofjustice/cloud-platform-terraform-secrets-manager?ref=tom-branch"
+  source = "../"
   team_name               = var.team_name
   application             = var.application
   business-unit           = var.business_unit
