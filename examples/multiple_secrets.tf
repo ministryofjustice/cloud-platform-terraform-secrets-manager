@@ -29,7 +29,7 @@ module "irsa_multiple_secrets" {
   eks_cluster_name =  var.eks_cluster_name
   namespace        = var.namespace
   role_policy_arns = [module.secrets_manager.irsa_policy_arn]
-  service_account = var.service-account-name
+  service_account = var.service_account_name
 }
 
 resource "kubernetes_secret" "irsa_multiple_secrets" {
