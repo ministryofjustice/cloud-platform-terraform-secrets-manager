@@ -6,8 +6,6 @@ provider "aws" {
   profile = "moj-cp"
 }
 
-data "aws_caller_identity" "current" {}
-
 resource "aws_secretsmanager_secret" "secret" {
   for_each                = { for k, v in var.secrets : k => v }
   description             = each.value.description != "" ? each.value.description : "Secret for ${each.value.name}"
