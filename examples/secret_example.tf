@@ -10,7 +10,7 @@ module "secrets_manager" {
   
   secrets = {
     "tom-test-secret-01" = {
-      name                    = "tom-test-secret-01",
+      name                    = "test-secret-01",
       description             = "test secret",
       recovery-window-in-days = 0
     },
