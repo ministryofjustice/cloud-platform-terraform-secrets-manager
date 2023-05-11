@@ -31,8 +31,3 @@ variable "infrastructure_support" {
 
 variable "is_production" {
 }
-
-variable "serviceaccount_name" {
-  description = "The name of the service account you want to create"
-  default     = ""
-}
