@@ -2,11 +2,11 @@ module "secrets_manager_multiple_secrets" {
   source = "../"
   team_name               = var.team_name
   application             = var.application
-  business-unit           = var.business_unit
-  is-production           = var.is_production
+  business_unit           = var.business_unit
+  is_production           = var.is_production
   namespace               = var.namespace
-  environment-name        = var.environment
-  infrastructure-support  = var.infrastructure_support
+  environment        = var.environment
+  infrastructure_support  = var.infrastructure_support
   
   secrets = {
     "test-secret-01" = {
