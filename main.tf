@@ -5,7 +5,6 @@ provider "aws" {
 
 data "aws_caller_identity" "current" {}
 
-# dynamtic secrets example 
 resource "aws_secretsmanager_secret" "secret" {
   for_each                = { for k, v in var.secrets : k => v }
   description             = each.value.description != "" ? each.value.description : "Secret for ${each.value.name}"
@@ -24,7 +23,7 @@ resource "aws_secretsmanager_secret" "secret" {
 }
 
 resource "aws_iam_policy" "policy" {
-  for_each                = { for k, v in var.secrets : k => v }
+  for_each    = { for k, v in var.secrets : k => v }
   name        = "${each.value.namespace}-policy-for-${each.value.name}-secret"
   path        = "/"
   description = "This policy is created to access the ${each.value.name} secret for the ${each.value.namespace} namespace."
