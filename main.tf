@@ -43,7 +43,7 @@ data "aws_iam_policy_document" "irsa_policy" {
 }
 
 resource "aws_iam_policy" "irsa_policy" {
-  name        = "irsa-policy-to-access-secrets"
+  name        = "${var.namespace}-irsa-policy-to-access-secrets"
   path        = "/${var.namespace}/"
   policy      = data.aws_iam_policy_document.irsa_policy.json
   description = "Policy for accessing secrets via IRSA"
