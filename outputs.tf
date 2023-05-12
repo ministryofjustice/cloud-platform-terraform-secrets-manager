@@ -3,6 +3,6 @@ output "irsa_policy_arn" {
   description = "The policy arn that grants access to the secret."
 }
 output "secret_store_name" {
-  value = "${var.namespace}-secrets-store"
+  value       = "${var.namespace}-secrets-store"
   description = "value of the secret store name"
 }

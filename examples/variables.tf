@@ -32,13 +32,9 @@ variable "eks_cluster_name" {
   default     = "example_name"
 }
 
-variable "service_account_name" {
-  description = "The name of the service account."
-  type        = string
-  default     = "example_name"
-}
-
 variable "infrastructure_support" {
   description = "The team responsible for managing the infrastructure. Should be of the form team-email."
   default     = "example@digital.justice.gov.uk"
 }
+
+

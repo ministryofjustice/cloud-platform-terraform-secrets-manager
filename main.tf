@@ -20,7 +20,7 @@ resource "aws_secretsmanager_secret" "secret" {
   description             = each.value.description != "" ? each.value.description : "Secret for ${each.value.name}"
   name                    = "${var.namespace}/${each.value.name}"
   recovery_window_in_days = each.value.recovery-window-in-days # Set to 0 for no protection, between 7-30 days protection, default is 30.
-  tags = local.default_tags
+  tags                    = local.default_tags
 
 }
 
@@ -30,15 +30,15 @@ data "aws_iam_policy_document" "irsa_policy" {
     sid    = "Stmt1682592071960"
     effect = "Allow"
 
-    actions   = ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret" ]
-     resources = [ "arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:secret:${var.namespace}/*" ]
+    actions   = ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"]
+    resources = ["arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:secret:${var.namespace}/*"]
   }
   statement {
     sid    = "Stmt1682592056675"
     effect = "Allow"
 
-    actions   = ["secretsmanager:ListSecrets" ]
-     resources = [ "*" ]
+    actions   = ["secretsmanager:ListSecrets"]
+    resources = ["*"]
   }
 }
 

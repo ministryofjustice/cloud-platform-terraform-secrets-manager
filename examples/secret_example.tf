@@ -1,15 +1,16 @@
 module "secrets_manager" {
   source = "../"
+  // source = "github.com/ministryofjustice/cloud-platform-terraform-secrets-manager?ref=1.1.0"
   team_name               = var.team_name
   application             = var.application
   business_unit           = var.business_unit
   is_production           = var.is_production
   namespace               = var.namespace
-  environment        = var.environment
+  environment             = var.environment
   infrastructure_support  = var.infrastructure_support
   
   secrets = {
-    "tom-test-secret-01" = {
+    "test-secret-01" = {
       name                    = "test-secret-01",
       description             = "test secret",
       recovery-window-in-days = 0
@@ -38,4 +39,4 @@ resource "kubernetes_secret" "irsa" {
 }
 
 // Existing users who have IRSA 
-// Add "module.secrets_manager.irsa_policy_arn" to the role_policy_arns in the irsa module
+// Add "module.secrets_manager.irsa_policy_arn" to the role_policy_arns in the irsa module 
