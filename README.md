@@ -67,7 +67,6 @@ No modules.
 | <a name="input_is_production"></a> [is\_production](#input\_is\_production) | n/a | `any` | n/a | yes |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | n/a | `any` | n/a | yes |
 | <a name="input_secrets"></a> [secrets](#input\_secrets) | n/a | <pre>map(object({<br>    name                    = string<br>    description             = string<br>    recovery-window-in-days = number<br><br>  }))</pre> | n/a | yes |
-| <a name="input_serviceaccount_name"></a> [serviceaccount\_name](#input\_serviceaccount\_name) | The name of the service account you want to create | `string` | `""` | no |
 | <a name="input_team_name"></a> [team\_name](#input\_team\_name) | The name of your development team | `any` | n/a | yes |
 
 ## Outputs
