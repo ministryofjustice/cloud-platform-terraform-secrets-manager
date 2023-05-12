@@ -15,10 +15,14 @@ locals {
 
 }
 
+resource "random_id" "name" {
+  byte_length = 12
+}
+
 resource "aws_secretsmanager_secret" "secret" {
   for_each                = { for k, v in var.secrets : k => v }
   description             = each.value.description != "" ? each.value.description : "Secret for ${each.value.name}"
-  name                    = "${var.namespace}/${each.value.name}"
+  name                    = "${var.namespace}/cloud-platform-${random_id.name.b64_url}"
   recovery_window_in_days = each.value.recovery-window-in-days # Set to 0 for no protection, between 7-30 days protection, default is 30.
   tags                    = local.default_tags
 
