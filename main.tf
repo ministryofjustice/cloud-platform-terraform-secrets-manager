@@ -16,13 +16,14 @@ locals {
 }
 
 resource "random_id" "secret_name" {
-  byte_length = 12
+  for_each                = var.secrets
+  byte_length = 8
 }
 
 resource "aws_secretsmanager_secret" "secret" {
   for_each                = { for k, v in var.secrets : k => v }
   description             = each.value.description != "" ? each.value.description : "Secret for ${each.value.name}"
-  name                    = "${var.eks_cluster_name}-${var.namespace}-cloud-platform-${random_id.secret_name.b64_url}"
+  name                    = "${var.eks_cluster_name}-${var.namespace}-cloud-platform-${random_id.secret_name[each.key].hex}"
   recovery_window_in_days = each.value.recovery_window_in_days # Set to 0 for no protection, between 7-30 days protection, default is 30.
    tags = merge(
     {target-k8s-secret-name = "${each.value.k8s_secret_name}"},
