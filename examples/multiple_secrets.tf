@@ -1,5 +1,5 @@
 locals {
-  irsa_serviceaccount_name = (var.irsa_serviceaccount_name != "" ? var.irsa_serviceaccount_name : "irsa-${var.namespace}")
+  ms_irsa_serviceaccount_name = (var.irsa_serviceaccount_name != "" ? var.irsa_serviceaccount_name : "irsa-${var.namespace}")
 }
 module "secrets_manager_multiple_secrets" {
   source = "../"
@@ -10,7 +10,7 @@ module "secrets_manager_multiple_secrets" {
   namespace               = var.namespace
   environment        = var.environment
   infrastructure_support  = var.infrastructure_support
-  serviceaccount_name = local.irsa_serviceaccount_name
+  serviceaccount_name = local.ms_irsa_serviceaccount_name
   
   secrets = {
     "test-secret-01" = {
@@ -31,7 +31,7 @@ module "irsa_multiple_secrets" {
   eks_cluster_name =  var.eks_cluster_name
   namespace        = var.namespace
   role_policy_arns = [module.secrets_manager.irsa_policy_arn]
-  service_account = local.irsa_serviceaccount_name
+  service_account = local.ms_irsa_serviceaccount_name
 }
 
 resource "kubernetes_secret" "irsa_multiple_secrets" {
@@ -41,7 +41,7 @@ resource "kubernetes_secret" "irsa_multiple_secrets" {
   }
   data = {
     role           = module.irsa.aws_iam_role_name
-    serviceaccount = local.irsa_serviceaccount_name
+    serviceaccount = local.ms_irsa_serviceaccount_name
   }
 }
 
