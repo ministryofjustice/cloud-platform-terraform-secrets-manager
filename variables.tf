@@ -6,7 +6,6 @@ variable "secrets" {
   type = map(object({
     description             = string
     recovery-window-in-days = number
-
   }))
 }
 variable "application" {

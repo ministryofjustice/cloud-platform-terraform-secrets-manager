@@ -61,24 +61,59 @@ resource "kubernetes_manifest" "secret_store" {
     "metadata" = {
       "name"      = local.secret_store_name
       "namespace" = var.namespace
-      "labels"    = {
-        "managed/by": "terraform"
+      "labels" = {
+        "managed/by" : "terraform"
       }
     }
     "spec" = {
       "provider" = {
-        "aws": {
-          "service": "SecretsManager"
-          "region": data.aws_region.current.name
-          "auth": {
-            "jwt": {
-              "serviceAccountRef": {
-                "name": var.serviceaccount_name
+        "aws" : {
+          "service" : "SecretsManager"
+          "region" : data.aws_region.current.name
+          "auth" : {
+            "jwt" : {
+              "serviceAccountRef" : {
+                "name" : var.serviceaccount_name
               }
             }
           }
         }
       }
+    }
+  }
+}
+
+
+resource "kubernetes_manifest" "external_secrets" {
+  count    = var.enable_external_secrets ? 1 : 0
+  for_each = values(aws_secretsmanager_secret.secret)[*].name
+  manifest = {
+    "apiVersion" = "external-secrets.io/v1beta1"
+    "kind"       = "ExternalSecret"
+    "metadata" = {
+      "name"      = "eks-external-secret-${each.value.name}"
+      "namespace" = var.namespace
+      "labels" = {
+        "managed/by" : "terraform"
+      }
+    }
+    "spec" = {
+      "refreshInterval" = "10m"
+      "secretStoreRef" = {
+        "name" = local.secret_store_name
+        "kind" = "SecretStore"
+      }
+      "target" = {
+        "name" = each.value.name
+      }
+      "data" = [
+        {
+          "secretKey" = each.value.name
+          "remoteRef" = {
+            "key" = "${each.value.name}-key"
+          }
+        }
+      ]
     }
   }
 }
