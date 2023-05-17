@@ -23,8 +23,12 @@ resource "aws_secretsmanager_secret" "secret" {
   for_each                = { for k, v in var.secrets : k => v }
   description             = each.value.description != "" ? each.value.description : "Secret for ${each.value.name}"
   name                    = "${var.eks_cluster_name}-${var.namespace}-cloud-platform-${random_id.secret_name.b64_url}"
-  recovery_window_in_days = each.value.recovery-window-in-days # Set to 0 for no protection, between 7-30 days protection, default is 30.
-  tags                    = local.default_tags
+  recovery_window_in_days = each.value.recovery_window_in_days # Set to 0 for no protection, between 7-30 days protection, default is 30.
+   tags = merge(
+    {target-k8s-secret-name = "${each.value.k8s_secret_name}"},
+    {target-k8s-secret-key = "${each.value.k8s_secret_key}"},
+    local.default_tags
+  )
 
 }
 
@@ -35,14 +39,7 @@ data "aws_iam_policy_document" "irsa_policy" {
     effect = "Allow"
 
     actions   = ["secretsmanager:GetSecretValue", "secretsmanager:DescribeSecret"]
-    resources = ["arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:secret:${var.namespace}/*"]
-  }
-  statement {
-    sid    = "Stmt1682592056675"
-    effect = "Allow"
-
-    actions   = ["secretsmanager:ListSecrets"]
-    resources = ["*"]
+    resources = ["arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:secret:${var.eks_cluster_name}-${var.namespace}-*"]
   }
 }
 
@@ -84,31 +81,31 @@ resource "kubernetes_manifest" "secret_store" {
 
 
 resource "kubernetes_manifest" "external_secrets" {
-  for_each = values(aws_secretsmanager_secret.secret)[*].name
+  for_each                = { for k, v in aws_secretsmanager_secret.secret : k => v }
   manifest = {
     "apiVersion" = "external-secrets.io/v1beta1"
     "kind"       = "ExternalSecret"
     "metadata" = {
-      "name"      = "eks-external-secret-${each.value.name}"
+      "name"      = "eks-external-secret-${aws_secretsmanager_secret.secret[each.key].tags["target-k8s-secret-name"]}"
       "namespace" = var.namespace
       "labels" = {
         "managed/by" : "terraform"
       }
     }
     "spec" = {
-      "refreshInterval" = "10m"
+      "refreshInterval" = "1m"
       "secretStoreRef" = {
         "name" = local.secret_store_name
         "kind" = "SecretStore"
       }
       "target" = {
-        "name" = each.value.name
+        "name" = "${aws_secretsmanager_secret.secret[each.key].tags["target-k8s-secret-name"]}"
       }
       "data" = [
         {
-          "secretKey" = each.value.name
+          "secretKey" = "${aws_secretsmanager_secret.secret[each.key].tags["target-k8s-secret-key"]}"
           "remoteRef" = {
-            "key" = "${each.value.name}-key"
+            "key" = "${aws_secretsmanager_secret.secret[each.key].name}"
           }
         }
       ]

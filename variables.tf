@@ -5,7 +5,9 @@ variable "eks_cluster_name" {
 variable "secrets" {
   type = map(object({
     description             = string
-    recovery-window-in-days = number
+    recovery_window_in_days = number
+    k8s_secret_name        = string
+    k8s_secret_key = string
   }))
 }
 variable "application" {
