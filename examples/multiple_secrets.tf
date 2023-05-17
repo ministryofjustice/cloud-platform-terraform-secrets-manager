@@ -11,6 +11,7 @@ module "secrets_manager_multiple_secrets" {
   environment        = var.environment
   infrastructure_support  = var.infrastructure_support
   serviceaccount_name = local.ms_irsa_serviceaccount_name
+  eks_cluster_name       = var.eks_cluster_name
   
   secrets = {
     "test-secret-01" = {

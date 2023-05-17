@@ -12,6 +12,7 @@ module "secrets_manager" {
   environment             = var.environment
   infrastructure_support  = var.infrastructure_support
   serviceaccount_name = var.serviceaccount_name
+  eks_cluster_name       = var.eks_cluster_name
   
   secrets = {
     "test-secret-01" = {

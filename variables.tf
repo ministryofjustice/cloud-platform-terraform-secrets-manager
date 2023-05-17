@@ -36,7 +36,7 @@ variable "infrastructure_support" {
 variable "is_production" {
 }
 
-variable "service_account_name" {
+variable "serviceaccount_name" {
   description = "The name of the service account to be used for the external secrets controller."
   type        = string
   default     = "example_name"
