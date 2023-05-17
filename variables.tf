@@ -39,7 +39,3 @@ variable "serviceaccount_name" {
   type        = string
   default     = "example_name"
 }
-variable "enable_external_secrets" {
-  description = "Enable the external secrets controller."
-  default     = "true"
-}

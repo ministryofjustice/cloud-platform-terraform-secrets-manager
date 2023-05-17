@@ -54,7 +54,6 @@ resource "aws_iam_policy" "irsa_policy" {
 }
 
 resource "kubernetes_manifest" "secret_store" {
-  count = var.enable_external_secrets ? 1 : 0
   manifest = {
     "apiVersion" = "external-secrets.io/v1alpha1"
     "kind"       = "SecretStore"
@@ -85,7 +84,6 @@ resource "kubernetes_manifest" "secret_store" {
 
 
 resource "kubernetes_manifest" "external_secrets" {
-  count    = var.enable_external_secrets ? 1 : 0
   for_each = values(aws_secretsmanager_secret.secret)[*].name
   manifest = {
     "apiVersion" = "external-secrets.io/v1beta1"
