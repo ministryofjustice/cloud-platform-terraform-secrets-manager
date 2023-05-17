@@ -11,7 +11,7 @@ module "secrets_manager" {
   namespace               = var.namespace
   environment             = var.environment
   infrastructure_support  = var.infrastructure_support
-  serviceaccount_name = var.serviceaccount_name
+  serviceaccount_name = local.irsa_serviceaccount_name
   eks_cluster_name       = var.eks_cluster_name
   
   secrets = {
@@ -29,7 +29,7 @@ module "irsa" {
   eks_cluster_name =  var.eks_cluster_name
   namespace        = var.namespace
   role_policy_arns = [module.secrets_manager.irsa_policy_arn]
-  service_account = var.serviceaccount_name
+  service_account = local.irsa_serviceaccount_name
 }
 
 resource "kubernetes_secret" "irsa" {
@@ -39,7 +39,7 @@ resource "kubernetes_secret" "irsa" {
   }
   data = {
     role           = module.irsa.aws_iam_role_name
-    serviceaccount = module.irsa.service_account_name.name
+    serviceaccount = local.irsa_serviceaccount_name
   }
 }
 
