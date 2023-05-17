@@ -1,3 +1,6 @@
+locals {
+  irsa_serviceaccount_name = (var.irsa_serviceaccount_name != "" ? var.irsa_serviceaccount_name : "irsa-${var.namespace}")
+}
 module "secrets_manager" {
   source = "../"
   // source = "github.com/ministryofjustice/cloud-platform-terraform-secrets-manager?ref=1.1.0"
@@ -8,10 +11,10 @@ module "secrets_manager" {
   namespace               = var.namespace
   environment             = var.environment
   infrastructure_support  = var.infrastructure_support
+  serviceaccount_name = var.serviceaccount_name
   
   secrets = {
     "test-secret-01" = {
-      name                    = "test-secret-01",
       description             = "test secret",
       recovery-window-in-days = 0
     },
@@ -25,6 +28,7 @@ module "irsa" {
   eks_cluster_name =  var.eks_cluster_name
   namespace        = var.namespace
   role_policy_arns = [module.secrets_manager.irsa_policy_arn]
+  service_account = var.serviceaccount_name
 }
 
 resource "kubernetes_secret" "irsa" {

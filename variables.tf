@@ -1,3 +1,7 @@
+variable "eks_cluster_name" {
+  description = "The name of the eks cluster to use a secret prefix"
+  type        = string
+}
 variable "secrets" {
   type = map(object({
     name                    = string
@@ -30,4 +34,14 @@ variable "infrastructure_support" {
 }
 
 variable "is_production" {
+}
+
+variable "service_account_name" {
+  description = "The name of the service account to be used for the external secrets controller."
+  type        = string
+  default     = "example_name"
+}
+variable "enable_external_secrets" {
+  description = "Enable the external secrets controller."
+  default     = "true"
 }

@@ -15,14 +15,14 @@ locals {
 
 }
 
-resource "random_id" "name" {
+resource "random_id" "secret_name" {
   byte_length = 12
 }
 
 resource "aws_secretsmanager_secret" "secret" {
   for_each                = { for k, v in var.secrets : k => v }
   description             = each.value.description != "" ? each.value.description : "Secret for ${each.value.name}"
-  name                    = "${var.namespace}/cloud-platform-${random_id.name.b64_url}"
+  name                    = "${var.eks_cluster_name}-${var.namespace}-cloud-platform-${random_id.secret_name.b64_url}"
   recovery_window_in_days = each.value.recovery-window-in-days # Set to 0 for no protection, between 7-30 days protection, default is 30.
   tags                    = local.default_tags
 
@@ -53,32 +53,33 @@ resource "aws_iam_policy" "irsa_policy" {
   description = "Policy for accessing secrets via IRSA"
 }
 
-# resource "kubernetes_manifest" "secret_store" {
-#   manifest = {
-#     "apiVersion" = "external-secrets.io/v1alpha1"
-#     "kind"       = "SecretStore"
-#     "metadata" = {
-#       "name"      = local.secret_store_name
-#       "namespace" = var.namespace
-#       "labels"    = {
-#         "managed/by": "terraform"
-#       }
-#     }
-#     "spec" = {
-#       "provider" = {
-#         "aws": {
-#           "service": "SecretsManager"
-#           "region": data.aws_region.current.name
-#           "auth": {
-#             "jwt": {
-#               "serviceAccountRef": {
-#                 "name": var.serviceaccount_name
-#               }
-#             }
-#           }
-#         }
-#       }
-#     }
-#   }
-# }
+resource "kubernetes_manifest" "secret_store" {
+  count = var.enable_external_secrets ? 1 : 0
+  manifest = {
+    "apiVersion" = "external-secrets.io/v1alpha1"
+    "kind"       = "SecretStore"
+    "metadata" = {
+      "name"      = local.secret_store_name
+      "namespace" = var.namespace
+      "labels"    = {
+        "managed/by": "terraform"
+      }
+    }
+    "spec" = {
+      "provider" = {
+        "aws": {
+          "service": "SecretsManager"
+          "region": data.aws_region.current.name
+          "auth": {
+            "jwt": {
+              "serviceAccountRef": {
+                "name": var.serviceaccount_name
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
