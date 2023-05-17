@@ -18,6 +18,8 @@ module "secrets_manager" {
     "test-secret-01" = {
       description             = "test secret",
       recovery-window-in-days = 0
+      k8s_secret_name        = "test-secret-01"
+      k8s_secret_key = "test-secret-01-key"
     },
   }
 }
