@@ -65,9 +65,4 @@ variable "github_owner" {
   default     = "ministryofjustice"
 }
 
-variable "irsa_serviceaccount_name" {
-  description = "The name of the service account."
-  type        = string
-  default     = "irsa_serviceaccount"
-}
 
