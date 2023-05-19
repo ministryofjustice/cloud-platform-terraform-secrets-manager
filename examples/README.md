@@ -12,4 +12,6 @@ For each secret to be created on AWS Secrets Manager, update the map with a `key
 
 To create multiple secrets, refer the [multiple_secrets.tf](multiple_secrets.tf).
 
-Commit your changes to a branch and raise a pull request. Once approved, you can merge and the changes will be applied. Shortly after, you should be able to access the `Secret` on kubernetes and acccess the resources. You might want to refer to the [documentation on Secrets](https://kubernetes.io/docs/concepts/configuration/secret/).
+Commit your changes to a branch and raise a pull request. Once approved, you can merge and the changes will be applied. 
+
+Follow the [Cloud Platform - Secrets Manager]() user guide on how to update the secret value. Once the secret value has been updated using AWS console, you will see a kubernetes_secret generated for every secret create above. You can decode the secret to check and refer it to our deployment to fetch it from the kubernetes_secret.
