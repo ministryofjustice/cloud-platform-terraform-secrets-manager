@@ -19,7 +19,9 @@ This Terraform module is used to create and manage secret manager resources in t
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_iam_assumable_role"></a> [iam\_assumable\_role](#module\_iam\_assumable\_role) | terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc | 5.13.0 |
 
 ## Resources
 
@@ -29,8 +31,11 @@ No modules.
 | [aws_secretsmanager_secret.secret](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
 | [kubernetes_manifest.external_secrets](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest) | resource |
 | [kubernetes_manifest.secret_store](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest) | resource |
+| [kubernetes_service_account.generated_sa](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/service_account) | resource |
 | [random_id.secret_name](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
+| [random_id.serviceaccount_id](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [aws_eks_cluster.eks_cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster) | data source |
 | [aws_iam_policy_document.irsa_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 
@@ -46,7 +51,6 @@ No modules.
 | <a name="input_is_production"></a> [is\_production](#input\_is\_production) | n/a | `any` | n/a | yes |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | n/a | `any` | n/a | yes |
 | <a name="input_secrets"></a> [secrets](#input\_secrets) | n/a | <pre>map(object({<br>    description             = string<br>    recovery_window_in_days = number<br>    k8s_secret_name        = string<br>    k8s_secret_key = string<br>  }))</pre> | n/a | yes |
-| <a name="input_serviceaccount_name"></a> [serviceaccount\_name](#input\_serviceaccount\_name) | The name of the service account to be used for the external secrets controller. | `string` | `"example_name"` | no |
 | <a name="input_team_name"></a> [team\_name](#input\_team\_name) | The name of your development team | `any` | n/a | yes |
 
 ## Outputs
