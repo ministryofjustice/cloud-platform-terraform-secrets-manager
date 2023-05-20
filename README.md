@@ -55,8 +55,6 @@ This Terraform module is used to create and manage secret manager resources in t
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| <a name="output_irsa_policy_arn"></a> [irsa\_policy\_arn](#output\_irsa\_policy\_arn) | The policy arn that grants access to the secret. |
+No outputs.
 
 <!--- END_TF_DOCS --->
