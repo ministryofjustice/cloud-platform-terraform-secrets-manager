@@ -8,7 +8,9 @@ These examples are designed to be used in the [cloud-platform-environments](http
 
 In your namespace's path in the [cloud-platform-environments](https://github.com/ministryofjustice/cloud-platform-environments/) repository, create a directory called `resources` (if you have not created one already) and refer to the contents of [secret.tf](secret.tf) to define the module properties. Make sure to change variable names to what is appropriate for your variables.tf
 
-For each secret to be created on AWS Secrets Manager, update the map with a `key` e.g. `test-secret-01`, `description`, `recovery_window_in_days`, `k8s_secret_name` and the `k8s_secret_key`
+For each secret to be created on AWS Secrets Manager, update the map with a `key` e.g. `test-secret-01`, `description`, `recovery_window_in_days` and `k8s_secret_name`
+
+The secret names in the AWS Secrets Manager are auto-generated and hence make sure to give a correct description while creating the secret. This will help identify the secret when updating the secret value from AWS console
 
 To create multiple secrets, refer the [multiple_secrets.tf](multiple_secrets.tf).
 

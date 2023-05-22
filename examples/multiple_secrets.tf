@@ -15,13 +15,11 @@ module "secrets_manager_multiple_secrets" {
       description             = "test secret 01",
       recovery_window_in_days = 0
       k8s_secret_name        = "test-secret-01"
-      k8s_secret_key = "test-secret-01-key"
     },
     "test-secret-02" = {
       description             = "test secret 02",
       recovery_window_in_days = 0
       k8s_secret_name        = "test-secret-02"
-      k8s_secret_key = "test-secret-02-key"
     },
   }
 }

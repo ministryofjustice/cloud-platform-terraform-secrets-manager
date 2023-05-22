@@ -34,33 +34,17 @@ resource "aws_secretsmanager_secret" "secret" {
   recovery_window_in_days = each.value.recovery_window_in_days != "" ? each.value.recovery_window_in_days : 30
    tags = merge(
     {target-k8s-secret-name = "${each.value.k8s_secret_name}"},
-    {target-k8s-secret-key = "${each.value.k8s_secret_key}"},
     local.default_tags
   )
 
 }
-
-module "iam_assumable_role" {
-  source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
-  version                       = "5.13.0"
-  create_role                   = true
-  role_name                     = "${var.eks_cluster_name}-${var.namespace}-${local.eso_irsa_serviceaccount_name}"
-  provider_url                  = data.aws_eks_cluster.eks_cluster.identity[0].oidc[0].issuer
-  role_policy_arns              = [aws_iam_policy.irsa_policy.arn]
-  oidc_fully_qualified_subjects = ["system:serviceaccount:${var.namespace}:${local.eso_irsa_serviceaccount_name}"]
+module "irsa" {
+  source = "github.com/ministryofjustice/cloud-platform-terraform-irsa?ref=1.1.0"
+  eks_cluster_name =  var.eks_cluster_name
+  namespace        = var.namespace
+  role_policy_arns = [aws_iam_policy.irsa_policy.arn]
+  service_account = local.eso_irsa_serviceaccount_name
 }
-
-resource "kubernetes_service_account" "generated_sa" {
-  metadata {
-    name      = local.eso_irsa_serviceaccount_name
-    namespace = var.namespace
-    annotations = {
-      "eks.amazonaws.com/role-arn" = module.iam_assumable_role.iam_role_arn
-    }
-  }
-  automount_service_account_token = true
-}
-
 
 data "aws_iam_policy_document" "irsa_policy" {
   statement {
@@ -130,10 +114,9 @@ resource "kubernetes_manifest" "external_secrets" {
       "target" = {
         "name" = "${aws_secretsmanager_secret.secret[each.key].tags["target-k8s-secret-name"]}"
       }
-      "data" = [
+      "dataFrom" = [
         {
-          "secretKey" = "${aws_secretsmanager_secret.secret[each.key].tags["target-k8s-secret-key"]}"
-          "remoteRef" = {
+          "extract" = {
             "key" = "${aws_secretsmanager_secret.secret[each.key].name}"
           }
         }

@@ -7,7 +7,6 @@ variable "secrets" {
     description             = string
     recovery_window_in_days = number
     k8s_secret_name        = string
-    k8s_secret_key = string
   }))
 }
 variable "application" {

@@ -16,7 +16,6 @@ module "secrets_manager" {
       description             = "test secret", // Required
       recovery_window_in_days = 7, // Required
       k8s_secret_name        = "test-secret-01" // The name of the secret in k8s
-      k8s_secret_key = "test-secret-01-key" // The key of the secret in k8s
     },
   }
 }
