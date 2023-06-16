@@ -30,7 +30,7 @@ resource "random_id" "secret_name" {
 resource "aws_secretsmanager_secret" "secret" {
   for_each                = { for k, v in var.secrets : k => v }
   description             = each.value.description
-  name                    = "${var.eks_cluster_name}-${var.namespace}-cloud-platform-${random_id.secret_name[each.key].hex}"
+  name                    = "${var.eks_cluster_name}-${var.namespace}-${random_id.secret_name[each.key].hex}"
   recovery_window_in_days = each.value.recovery_window_in_days != "" ? each.value.recovery_window_in_days : 30
    tags = merge(
     {target-k8s-secret-name = "${each.value.k8s_secret_name}"},
