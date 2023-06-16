@@ -106,7 +106,7 @@ resource "kubernetes_manifest" "external_secrets" {
       }
     }
     "spec" = {
-      "refreshInterval" = "1m"
+      "refreshInterval" = "1h"
       "secretStoreRef" = {
         "name" = local.secret_store_name
         "kind" = "SecretStore"
