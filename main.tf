@@ -65,7 +65,7 @@ resource "aws_iam_policy" "irsa_policy" {
 
 resource "kubernetes_manifest" "secret_store" {
   manifest = {
-    "apiVersion" = "external-secrets.io/v1alpha1"
+    "apiVersion" = "external-secrets.io/v1beta1"
     "kind"       = "SecretStore"
     "metadata" = {
       "name"      = local.secret_store_name
