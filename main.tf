@@ -39,11 +39,21 @@ resource "aws_secretsmanager_secret" "secret" {
 
 }
 module "irsa" {
-  source = "github.com/ministryofjustice/cloud-platform-terraform-irsa?ref=1.1.0"
+  source = "github.com/ministryofjustice/cloud-platform-terraform-irsa?ref=2.0.0"
   eks_cluster_name =  var.eks_cluster_name
   namespace        = var.namespace
-  role_policy_arns = [aws_iam_policy.irsa_policy.arn]
-  service_account = local.eso_irsa_serviceaccount_name
+  role_policy_arns = {
+    irsa = aws_iam_policy.irsa_policy.arn
+  }
+  service_account_name = local.eso_irsa_serviceaccount_name
+
+   # Tags
+  business_unit          = var.business_unit
+  application            = var.application
+  is_production          = var.is_production
+  team_name              = var.team_name
+  environment_name       = var.environment
+  infrastructure_support = var.infrastructure_support
 }
 
 data "aws_iam_policy_document" "irsa_policy" {
@@ -65,7 +75,7 @@ resource "aws_iam_policy" "irsa_policy" {
 
 resource "kubernetes_manifest" "secret_store" {
   manifest = {
-    "apiVersion" = "external-secrets.io/v1alpha1"
+    "apiVersion" = "external-secrets.io/v1beta1"
     "kind"       = "SecretStore"
     "metadata" = {
       "name"      = local.secret_store_name
