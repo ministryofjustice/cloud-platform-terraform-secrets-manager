@@ -2,7 +2,7 @@
 
 This Terraform module is used to create and manage secret manager resources in the AWS.
 
-<!--- BEGIN_TF_DOCS --->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -56,5 +56,4 @@ This Terraform module is used to create and manage secret manager resources in t
 ## Outputs
 
 No outputs.
-
-<!--- END_TF_DOCS --->
+<!-- END_TF_DOCS -->
