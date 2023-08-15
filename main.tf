@@ -4,12 +4,13 @@ data "aws_caller_identity" "current" {}
 data "aws_eks_cluster" "eks_cluster" {
   name = var.eks_cluster_name
 }
+
 locals {
   default_tags = {
     business-unit          = var.business_unit
     application            = var.application
     is-production          = var.is_production
-    environment-name       = var.environment
+    environment-name       = var.environment_name
     owner                  = var.team_name
     infrastructure-support = var.infrastructure_support
     namespace              = var.namespace
@@ -52,7 +53,7 @@ module "irsa" {
   application            = var.application
   is_production          = var.is_production
   team_name              = var.team_name
-  environment_name       = var.environment
+  environment_name       = var.environment_name
   infrastructure_support = var.infrastructure_support
 }
 
@@ -134,4 +135,3 @@ resource "kubernetes_manifest" "external_secrets" {
     }
   }
 }
-
