@@ -1,6 +1,39 @@
-# cloud-platform-terraform-secret-manager
+# cloud-platform-terraform-secrets-manager
 
-This Terraform module is used to create and manage secret manager resources in the AWS.
+[![Releases](https://img.shields.io/github/v/release/ministryofjustice/cloud-platform-terraform-secrets-manager.svg)](https://github.com/ministryofjustice/cloud-platform-terraform-secrets-manager/releases)
+
+This Terraform module will create an [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) secret for use on the Cloud Platform.
+
+## Usage
+
+```hcl
+module "secret" {
+  source = "github.com/ministryofjustice/cloud-platform-terraform-secrets-manager?ref=version" # use the latest release
+
+  # EKS configuration
+  eks_cluster_name = var.eks_cluster_name
+
+  # Secrets configuration
+  secrets = {
+    "example" = {
+      description             = "example secret" # required
+      recovery_window_in_days = 7                # required
+      k8s_secret_name         = "example-secret" # the name of the secret in k8s
+    },
+  }
+
+  # Tags
+  business_unit          = var.business_unit
+  application            = var.application
+  is_production          = var.is_production
+  team_name              = var.team_name
+  namespace              = var.namespace
+  environment_name       = var.environment
+  infrastructure_support = var.infrastructure_support
+}
+```
+
+See the [examples/](examples/) folder for more information.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -56,3 +89,14 @@ This Terraform module is used to create and manage secret manager resources in t
 
 No outputs.
 <!-- END_TF_DOCS -->
+
+## Tags
+
+Some of the inputs for this module are tags. All infrastructure resources must be tagged to meet the MOJ Technical Guidance on [Documenting owners of infrastructure](https://technical-guidance.service.justice.gov.uk/documentation/standards/documenting-infrastructure-owners.html).
+
+You should use your namespace variables to populate these. See the [Usage](#usage) section for more information.
+
+## Reading Material
+
+- [Cloud Platform user guide](https://user-guide.cloud-platform.service.justice.gov.uk/#cloud-platform-user-guide)
+- [AWS Secrets Manager user guide](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html)
