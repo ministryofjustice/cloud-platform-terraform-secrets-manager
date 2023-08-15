@@ -4,17 +4,18 @@ data "aws_caller_identity" "current" {}
 data "aws_eks_cluster" "eks_cluster" {
   name = var.eks_cluster_name
 }
+
 locals {
   default_tags = {
     business-unit          = var.business_unit
     application            = var.application
     is-production          = var.is_production
-    environment-name       = var.environment
+    environment-name       = var.environment_name
     owner                  = var.team_name
     infrastructure-support = var.infrastructure_support
     namespace              = var.namespace
   }
-  secret_store_name = "${var.namespace}-secrets-store"
+  secret_store_name            = "${var.namespace}-secrets-store"
   eso_irsa_serviceaccount_name = "secrets-store-${random_id.serviceaccount_id.hex}"
 }
 
@@ -23,7 +24,7 @@ resource "random_id" "serviceaccount_id" {
 }
 
 resource "random_id" "secret_name" {
-  for_each                = var.secrets
+  for_each    = var.secrets
   byte_length = 8
 }
 
@@ -32,27 +33,27 @@ resource "aws_secretsmanager_secret" "secret" {
   description             = each.value.description
   name                    = "${var.eks_cluster_name}-${var.namespace}-${random_id.secret_name[each.key].hex}"
   recovery_window_in_days = each.value.recovery_window_in_days != "" ? each.value.recovery_window_in_days : 30
-   tags = merge(
-    {target-k8s-secret-name = "${each.value.k8s_secret_name}"},
+  tags = merge(
+    { target-k8s-secret-name = "${each.value.k8s_secret_name}" },
     local.default_tags
   )
 
 }
 module "irsa" {
-  source = "github.com/ministryofjustice/cloud-platform-terraform-irsa?ref=2.0.0"
-  eks_cluster_name =  var.eks_cluster_name
+  source           = "github.com/ministryofjustice/cloud-platform-terraform-irsa?ref=2.0.0"
+  eks_cluster_name = var.eks_cluster_name
   namespace        = var.namespace
   role_policy_arns = {
     irsa = aws_iam_policy.irsa_policy.arn
   }
   service_account_name = local.eso_irsa_serviceaccount_name
 
-   # Tags
+  # Tags
   business_unit          = var.business_unit
   application            = var.application
   is_production          = var.is_production
   team_name              = var.team_name
-  environment_name       = var.environment
+  environment_name       = var.environment_name
   infrastructure_support = var.infrastructure_support
 }
 
@@ -104,7 +105,7 @@ resource "kubernetes_manifest" "secret_store" {
 
 
 resource "kubernetes_manifest" "external_secrets" {
-  for_each                = { for k, v in aws_secretsmanager_secret.secret : k => v }
+  for_each = { for k, v in aws_secretsmanager_secret.secret : k => v }
   manifest = {
     "apiVersion" = "external-secrets.io/v1beta1"
     "kind"       = "ExternalSecret"
@@ -134,4 +135,3 @@ resource "kubernetes_manifest" "external_secrets" {
     }
   }
 }
-
