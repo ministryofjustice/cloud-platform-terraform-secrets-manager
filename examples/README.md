@@ -16,4 +16,4 @@ To create multiple secrets, refer the [multiple_secrets.tf](multiple_secrets.tf)
 
 Commit your changes to a branch and raise a pull request. Once approved, you can merge and the changes will be applied. 
 
-Follow the [Cloud Platform - Secrets Manager]() user guide on how to update the secret value. Once the secret value has been updated using AWS console, you will see a kubernetes_secret generated for every secret create above. You can decode the secret to check and refer to it in your deployment to fetch it from the kubernetes_secret.
+Follow the [Cloud Platform - Secrets Manager](https://user-guide.cloud-platform.service.justice.gov.uk/documentation/deploying-an-app/add-secrets-to-deployment.html#adding-secrets-to-an-application) user guide on how to update the secret value. Once the secret value has been updated using AWS console, you will see a kubernetes_secret generated for every secret create above. You can decode the secret to check and refer to it in your deployment to fetch it from the kubernetes_secret.
