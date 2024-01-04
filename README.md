@@ -90,7 +90,9 @@ See the [examples/](examples/) folder for more information.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_irsa_policy_arn"></a> [irsa\_policy\_arn](#output\_irsa\_policy\_arn) | n/a |
 <!-- END_TF_DOCS -->
 
 ## Tags
