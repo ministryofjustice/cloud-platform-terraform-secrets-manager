@@ -13,10 +13,10 @@ module "secrets_manager" {
 
   secrets = {
     // the key "test-secret-01" is used to create kubernetes resource and must only contain lowercase alphanumeric characters, dots and dashes
-    "test-secret-01" = {
+    "test-secret-one" = {
       description             = "test secret",   # Required
       recovery_window_in_days = 7,               # Required
-      k8s_secret_name         = "test-secret-01" # The name of the secret in k8s and must only contain lowercase alphanumeric characters, dots and dashes
+      k8s_secret_name         = "test-secret-one" # The name of the secret in k8s and must only contain lowercase alphanumeric characters, dots and dashes
     },
   }
 }
