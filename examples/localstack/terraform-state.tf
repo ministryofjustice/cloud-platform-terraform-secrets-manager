@@ -33,33 +33,3 @@ provider "aws" {
     sts            = "http://localhost:4566"
   }
 }
-
-module "secrets_manager_localstack" {
-  source = "github.com/ministryofjustice/cloud-platform-terraform-secrets-manager?ref=concourse"
-  secrets = {
-    "test-secret" = {
-      name                    = "test-secret",
-      recovery-window-in-days = 0,
-      random-password         = true,
-      team_name               = "test-team",
-      application             = "test-application",
-      business_unit           = "test-platform",
-      is_production           = false,
-      namespace               = "test-namespace",
-      environment             = "test-environment",
-      infrastructure_support  = "test-support-team@test.gov.uk",
-    },
-    "test-secret" = {
-      name                    = "test-secret",
-      recovery-window-in-days = 30,
-      random-password         = true,
-      team_name               = "test-team",
-      application             = "test-application",
-      business_unit           = "test-platform",
-      is_production           = false,
-      namespace               = "test-namespace",
-      environment             = "test-environment",
-      infrastructure_support  = "test-support-team@test.gov.uk",
-    },
-  }
-}
