@@ -13,10 +13,10 @@ variable "secrets" {
     k8s_secret_name         = string
   }))
 
-  // validate k8s_secret_name is a valid name
+  // validate k8s_secret_name is a valid name can only contain lowercase alphanumeric characters, dashes and dots
   validation {
-    condition     = can(regex("^[a-z0-9-]+$", var.secrets[*].k8s_secret_name))
-    error_message = "k8s_secret_name must be a valid k8s secret name (lowercase alphanumeric characters and dashes only)"
+    condition     = can(regex("^[a-z-.]+$", var.secrets[*].k8s_secret_name))
+    error_message = "k8s_secret_name must be a valid k8s secret name (lowercase alphanumeric characters, dashes and dots)"
   }
 }
 
