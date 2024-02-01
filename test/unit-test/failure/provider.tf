@@ -1,8 +1,8 @@
 provider "aws" {
-  access_key                  = "test"
-  secret_key                  = "test"
+  access_key                  = "null"
+  secret_key                  = "null"
   region                      = "eu-west-2"
-  s3_use_path_style           = false
+  s3_use_path_style           = true
   skip_credentials_validation = true
   skip_metadata_api_check     = true
   skip_requesting_account_id  = true
@@ -32,4 +32,13 @@ provider "aws" {
     stepfunctions  = "http://localhost:4566"
     sts            = "http://localhost:4566"
   }
+}
+
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+  required_version = ">= 1.2.5"
 }
