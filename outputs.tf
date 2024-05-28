@@ -3,5 +3,5 @@ output "irsa_policy_arn" {
 }
 
 output "secret_id" {
-  value = aws_secretsmanager_secret.secret.id
+  value = aws_secretsmanager_secret.secret.id[0]
 }
