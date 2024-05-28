@@ -14,7 +14,7 @@ variable "secrets" {
   }))
 
   validation {
-    condition = alltrue([for o in var.secrets : can(regex("^[a-z]([a-z0-9-.]*[a-z0-9])?$", o.k8s_secret_name))])
+    condition     = alltrue([for o in var.secrets : can(regex("^[a-z]([a-z0-9-.]*[a-z0-9])?$", o.k8s_secret_name))])
     error_message = "k8s_secret_name must be a valid k8s secret name (can only contain lowercase alphanumeric characters, numbers, dots and dashes. Must start with a letter and end with a letter or number)"
   }
 }
