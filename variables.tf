@@ -2,7 +2,7 @@
 # Configuration #
 #################
 variable "eks_cluster_name" {
-  description = "The name of the eks cluster to use a secret prefix"
+  description = "The name of the eks cluster to use a secret prefix - testing terraform docs action PR"
   type        = string
 }
 
