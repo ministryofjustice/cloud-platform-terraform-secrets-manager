@@ -80,12 +80,12 @@ See the [examples/](examples/) folder for more information.
 |------|-------------|------|---------|:--------:|
 | <a name="input_application"></a> [application](#input\_application) | Application name | `string` | n/a | yes |
 | <a name="input_business_unit"></a> [business\_unit](#input\_business\_unit) | Area of the MOJ responsible for the service | `string` | n/a | yes |
-| <a name="input_eks_cluster_name"></a> [eks\_cluster\_name](#input\_eks\_cluster\_name) | The name of the eks cluster to use a secret prefix | `string` | n/a | yes |
+| <a name="input_eks_cluster_name"></a> [eks\_cluster\_name](#input\_eks\_cluster\_name) | The name of the eks cluster to use a secret prefix - testing terraform docs action PR | `string` | n/a | yes |
 | <a name="input_environment_name"></a> [environment\_name](#input\_environment\_name) | Environment name | `string` | n/a | yes |
 | <a name="input_infrastructure_support"></a> [infrastructure\_support](#input\_infrastructure\_support) | The team responsible for managing the infrastructure. Should be of the form <team-name> (<team-email>) | `string` | n/a | yes |
 | <a name="input_is_production"></a> [is\_production](#input\_is\_production) | Whether this is used for production or not | `string` | n/a | yes |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace name | `string` | n/a | yes |
-| <a name="input_secrets"></a> [secrets](#input\_secrets) | n/a | <pre>map(object({<br>    description             = string<br>    recovery_window_in_days = number<br>    k8s_secret_name         = string<br>  }))</pre> | n/a | yes |
+| <a name="input_secrets"></a> [secrets](#input\_secrets) | n/a | <pre>map(object({<br/>    description             = string<br/>    recovery_window_in_days = number<br/>    k8s_secret_name         = string<br/>  }))</pre> | n/a | yes |
 | <a name="input_team_name"></a> [team\_name](#input\_team\_name) | Team name | `string` | n/a | yes |
 
 ## Outputs
