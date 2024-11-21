@@ -3,16 +3,35 @@ on:
     types: [opened, edited, reopened, synchronize]
 
 jobs:
-  go-tests:
-    name: Run Terratest Unit Tests
+  SecretsManagerValidateSuccess: 
+    name: Run terratest
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: hashicorp/setup-terraform@v2
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup go
+        uses: actions/setup-go@v5
         with:
-          terraform_version: 1.2.5
-          terraform_wrapper: false
+          go-version: 1.21.6
       - run: |
-          terraform init
-          terraform validate
-        working-directory: examples/
+          go mod download
+          go test -v -timeout 30m -run TestSMValidateSuccess ./...
+        working-directory: test
+
+  SecretsManagerValidateFailure: 
+    name: Run terratest
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.21.6
+      - run: |
+          go mod download
+          go test -v -timeout 30m -run TestSMValidateFailure ./...
+        working-directory: test
+        

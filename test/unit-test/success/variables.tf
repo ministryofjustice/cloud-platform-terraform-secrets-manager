@@ -1,58 +1,48 @@
-#################
-# Configuration #
-#################
 variable "eks_cluster_name" {
-  description = "The name of the eks cluster to use a secret prefix"
+  description = "The name of the cluster (eg.: cloud-platform-live-0)"
   type        = string
+  default     = "test"
+
 }
 
-variable "secrets" {
-  type = map(object({
-    description             = string
-    recovery_window_in_days = number
-    k8s_secret_name         = string
-  }))
-
-  validation {
-    condition = alltrue([for o in var.secrets : can(regex("^[a-z]([a-z0-9-.]*[a-z0-9])?$", o.k8s_secret_name))])
-    error_message = "k8s_secret_name must be a valid k8s secret name (can only contain lowercase alphanumeric characters, numbers, dots and dashes. Must start with a letter and end with a letter or number)"
-  }
-}
-
-########
-# Tags #
-########
 variable "business_unit" {
   description = "Area of the MOJ responsible for the service"
   type        = string
+  default     = "test"
 }
 
 variable "application" {
   description = "Application name"
   type        = string
+  default = "test"
 }
 
 variable "is_production" {
   description = "Whether this is used for production or not"
   type        = string
+  default     = "false"
 }
 
 variable "team_name" {
   description = "Team name"
   type        = string
+  default     = "test"
 }
 
 variable "namespace" {
   description = "Namespace name"
   type        = string
+  default     = "test"
 }
 
 variable "environment_name" {
   description = "Environment name"
   type        = string
+  default     = "test"
 }
 
 variable "infrastructure_support" {
   description = "The team responsible for managing the infrastructure. Should be of the form <team-name> (<team-email>)"
   type        = string
+  default     = "test"
 }
