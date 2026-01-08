@@ -76,7 +76,7 @@ resource "aws_iam_policy" "irsa_policy" {
 
 resource "kubernetes_manifest" "secret_store" {
   manifest = {
-    "apiVersion" = "external-secrets.io/v1beta1"
+    "apiVersion" = "external-secrets.io/v1"
     "kind"       = "SecretStore"
     "metadata" = {
       "name"      = local.secret_store_name
@@ -107,7 +107,7 @@ resource "kubernetes_manifest" "secret_store" {
 resource "kubernetes_manifest" "external_secrets" {
   for_each = { for k, v in aws_secretsmanager_secret.secret : k => v }
   manifest = {
-    "apiVersion" = "external-secrets.io/v1beta1"
+    "apiVersion" = "external-secrets.io/v1"
     "kind"       = "ExternalSecret"
     "metadata" = {
       "name"      = "eks-external-secret-${aws_secretsmanager_secret.secret[each.key].tags["target-k8s-secret-name"]}"
